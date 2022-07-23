@@ -10,7 +10,6 @@ from PIL import Image, ImageTk
 import json
 
 import utils.calc as calc
-from utils.colors import bcolors
 
 RED = (0, 0, 255)
 GREEN = (0, 255, 0)
@@ -62,8 +61,10 @@ class cvmsimage():
         self.paths = []
         path = 'Image_folder'
         folders = os.listdir(path)
+        folders = sorted(folders)
         for folder in folders:
             files = [f for f in os.listdir(os.path.join(path, folder)) if f.endswith('.jpg')]
+            files = sorted(files)
             for file in files:
                 if file in bans:
                     continue
@@ -101,7 +102,10 @@ class cvmsimage():
         self.roi = [x1, y1, x2, y2]
 
         # get points & voting
-        self.label_path = os.path.join('out', file).replace('S.jpg', '.json')
+        self.label_path = os.path.join('out', file)
+        self.label_path = self.label_path.replace('S.jpg', '.json')
+        self.label_path = self.label_path.replace('B.jpg', '.json')
+        print('self.label_path', self.label_path)
         if os.path.exists(self.label_path):
             # load data
             with open(self.label_path, 'r') as openfile:
@@ -327,7 +331,7 @@ def onMouseButton(event):
                 is_changed = True
 
     # Right mouse button press: add point
-    elif event.num == 3:
+    elif event.num == 2:
         if len(cvms.label['points_added']) < 2:
             cvms.label['points_added'].append([x, y])
             if len(cvms.label['points_added']) == 2:
