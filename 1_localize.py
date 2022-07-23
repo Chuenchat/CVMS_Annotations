@@ -355,12 +355,15 @@ def onKeyPress(event):
     # Change mouse's marking mode
     elif event.char in ['1', '!', 'ๅ', '+']:
         cvms.window = {'S':'B', 'B':'S'}[cvms.window]
+        cvms.save()
         cvms.load_image()
     elif event.char in ['2', '@', '/', '๑']:
         cvms.mode = {'points':'contours', 'contours':'points'}[cvms.mode]
+        cvms.save()
         cvms.load_image()
     elif event.char in ['3', '#', '-', '๒']:
         cvms.show_index = not cvms.show_index
+        cvms.save()
         cvms.load_image()
 
     # Change image
