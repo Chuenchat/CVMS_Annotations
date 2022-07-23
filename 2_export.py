@@ -45,7 +45,7 @@ def create_coco():
 if __name__ == "__main__":
 
     path = 'out'
-    files = os.listdir(path)
+    files = [f for f in os.listdir(path) if f.endswith('.json')]
 
     images = []
     annotations = []
